@@ -8,10 +8,18 @@ export default function Checkout() {
   const { items, clearCart } = useCartStore()
   const [paymentProcessing, setPaymentProcessing] = useState(false)
   const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
     cardNumber: '',
     expiry: '',
     cvc: ''
   })
+
   const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
 
   // Get related products for upsell/cross-sell
@@ -28,7 +36,7 @@ export default function Checkout() {
     
     clearCart()
     setPaymentProcessing(false)
-    navigate('/thank-you') // Redirect to thank you page after successful payment
+    navigate('/thank-you')
   }
 
   const handleInputChange = (e) => {
@@ -37,6 +45,11 @@ export default function Checkout() {
       ...prev,
       [id]: value
     }))
+  }
+
+  const handleUpsellAdd = (product) => {
+    useCartStore.getState().addItem({ ...product, quantity: 1 })
+    alert(`${product.name} added to cart!`)
   }
 
   return (
@@ -72,11 +85,101 @@ export default function Checkout() {
           </div>
         </div>
 
-        {/* Payment Form and Upsell Section */}
+        {/* Shipping and Payment Form */}
         <div className="space-y-8">
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Payment Information</h2>
+            <h2 className="text-xl font-semibold mb-4">Shipping Information</h2>
             <form onSubmit={handlePayment} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="fullName" className="block text-sm font-medium mb-2">Full Name</label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    className="w-full p-2 border rounded"
+                    placeholder="John Doe"
+                    required
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    className="w-full p-2 border rounded"
+                    placeholder="john@example.com"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  className="w-full p-2 border rounded"
+                  placeholder="123-456-7890"
+                  required
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="address" className="block text-sm font-medium mb-2">Address</label>
+                <input
+                  type="text"
+                  id="address"
+                  className="w-full p-2 border rounded"
+                  placeholder="123 Main St"
+                  required
+                  value={formData.address}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label htmlFor="city" className="block text-sm font-medium mb-2">City</label>
+                  <input
+                    type="text"
+                    id="city"
+                    className="w-full p-2 border rounded"
+                    placeholder="New York"
+                    required
+                    value={formData.city}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="state" className="block text-sm font-medium mb-2">State</label>
+                  <input
+                    type="text"
+                    id="state"
+                    className="w-full p-2 border rounded"
+                    placeholder="NY"
+                    required
+                    value={formData.state}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="zip" className="block text-sm font-medium mb-2">ZIP</label>
+                  <input
+                    type="text"
+                    id="zip"
+                    className="w-full p-2 border rounded"
+                    placeholder="10001"
+                    required
+                    value={formData.zip}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+
+              <h2 className="text-xl font-semibold mt-8 mb-4">Payment Information</h2>
               <div>
                 <label htmlFor="cardNumber" className="block text-sm font-medium mb-2">Card Number</label>
                 <input
@@ -121,7 +224,7 @@ export default function Checkout() {
               <button
                 type="submit"
                 disabled={paymentProcessing}
-                className="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors w-full"
+                className="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors w-full mt-6"
               >
                 {paymentProcessing ? 'Processing...' : 'Pay Now'}
               </button>
@@ -131,7 +234,7 @@ export default function Checkout() {
           {/* Upsell/Cross-sell Section */}
           {relatedProducts.length > 0 && (
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-xl font-semibold mb-4">You Might Also Like</h2>
+              <h2 className="text-xl font-semibold mb-4">Complete Your Look</h2>
               <div className="grid grid-cols-1 gap-4">
                 {relatedProducts.map(product => (
                   <div key={product.id} className="flex items-center gap-4">
@@ -146,10 +249,7 @@ export default function Checkout() {
                     </div>
                     <button
                       className="ml-auto bg-boho-accent text-white px-4 py-2 rounded-full text-sm hover:bg-opacity-90"
-                      onClick={() => {
-                        useCartStore.getState().addItem({ ...product, quantity: 1 })
-                        alert(`${product.name} added to cart!`)
-                      }}
+                      onClick={() => handleUpsellAdd(product)}
                     >
                       Add to Cart
                     </button>
