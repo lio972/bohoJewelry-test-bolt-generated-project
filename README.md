@@ -1,0 +1,1 @@
+# bohoJewelry-test-bolt-generated-project
