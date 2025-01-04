@@ -1,0 +1,15 @@
+@tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    body {
+      @apply bg-boho-secondary text-boho-text;
+    }
+
+    .product-card {
+      @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105;
+    }
+
+    .product-image {
+      @apply w-full h-64 object-cover;
+    }
