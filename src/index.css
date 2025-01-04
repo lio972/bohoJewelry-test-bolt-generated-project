@@ -1,15 +1,29 @@
 @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-    body {
-      @apply bg-boho-secondary text-boho-text;
-    }
+body {
+  @apply bg-boho-secondary text-boho-text;
+}
 
-    .product-card {
-      @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105;
-    }
+.product-card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105;
+}
 
-    .product-image {
-      @apply w-full h-64 object-cover;
-    }
+.product-image {
+  @apply w-full h-64 object-cover;
+}
+
+/* Conversion-focused button styles */
+.btn-primary {
+  @apply bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors;
+}
+
+/* SEO-friendly typography */
+h1, h2, h3 {
+  @apply font-serif text-boho-primary;
+}
+
+p {
+  @apply text-gray-700 leading-relaxed;
+}

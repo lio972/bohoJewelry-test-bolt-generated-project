@@ -1,23 +1,23 @@
 module.exports = {
-      content: [
-        './index.html',
-        './src/**/*.{js,ts,jsx,tsx}',
-      ],
-      theme: {
-        extend: {
-          colors: {
-            boho: {
-              primary: '#D4A373',
-              secondary: '#FAEDCD',
-              accent: '#CCD5AE',
-              text: '#4A4A4A'
-            }
-          },
-          fontFamily: {
-            sans: ['"Josefin Sans"', 'sans-serif'],
-            serif: ['"Playfair Display"', 'serif']
-          }
+  content: [
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        boho: {
+          primary: '#2C3E50', // Dark blue
+          secondary: '#F8F9FA', // Light gray
+          accent: '#E74C3C', // Red
+          text: '#34495E' // Dark gray
         }
       },
-      plugins: []
+      fontFamily: {
+        sans: ['"Inter"', 'sans-serif'],
+        serif: ['"Playfair Display"', 'serif']
+      }
     }
+  },
+  plugins: []
+}
